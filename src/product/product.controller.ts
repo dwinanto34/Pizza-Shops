@@ -7,37 +7,37 @@ import {
     Post,
     Put,
   } from '@nestjs/common';
-  import { CreateLinkDto } from './dto/create-link.dto';
-  import { GetLinkDto } from './dto/get-link.dto';
-  import { UpdateLinkDto } from './dto/update-link.dto';
-  import { Link } from './link.entity';
-  import { LinksService } from './links.service';
+  import { CreateProductDto } from './dto/create-product.dto';
+  import { GetProductDto } from './dto/get-product.dto';
+  import { UpdateProductDto } from './dto/update-product.dto';
+  import { Product } from './product.entity';
+  import { ProductService } from './product.service';
   
-  @Controller('links')
-  export class LinksController {
-    constructor(private readonly linksService: LinksService) {}
+  @Controller('product')
+  export class ProductController {
+    constructor(private readonly productService: ProductService) {}
   
     @Get()
-    getAllLinks(): Promise<Link[]> {
-      return this.linksService.getAllLinks();
+    getAllProducts(): Promise<Product[]> {
+      return this.productService.getAllProducts();
     }
   
     @Post()
-    createLink(@Body() createLinkDto: CreateLinkDto): Promise<Link> {
-      return this.linksService.createLink(createLinkDto);
+    createProduct(@Body() createProductDto: CreateProductDto): Promise<Product> {
+      return this.productService.createProduct(createProductDto);
     }
   
     @Delete('/:id')
-    deleteLink(@Param() getLinkDto: GetLinkDto): Promise<void> {
-      return this.linksService.deleteLink(getLinkDto);
+    deleteProduct(@Param() getProductDto: GetProductDto): Promise<void> {
+      return this.productService.deleteProduct(getProductDto);
     }
   
     @Put('/:id')
-    updateLink(
-      @Param() getLinkDto: GetLinkDto,
-      @Body() updateLinkDto: UpdateLinkDto,
-    ): Promise<Link> {
-      return this.linksService.updateLink(getLinkDto, updateLinkDto);
+    updateProduct(
+      @Param() getProductDto: GetProductDto,
+      @Body() updateProductDto: UpdateProductDto,
+    ): Promise<Product> {
+      return this.productService.updateProduct(getProductDto, updateProductDto);
     }
   }
   

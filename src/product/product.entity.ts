@@ -8,6 +8,6 @@ export class Product {
   @Column({ unique: true })
   name: string;
 
-  @Column({ type: 'int' })
-  price;
+  @Column()
+  price: number;
 }

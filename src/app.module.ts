@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { configValidationSchema } from './config.schema';
 import { LinksModule } from './links/links.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -23,6 +23,7 @@ import { LinksModule } from './links/links.module';
       },
     }),
     LinksModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],
