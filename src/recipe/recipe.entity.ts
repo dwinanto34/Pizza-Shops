@@ -1,19 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Ingredient {
+export class Recipe {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
-  name: string;
+  @Column()
+  pizza_product_id: string;
 
   @Column()
-  average_price_per_unit: number;
+  pizza_ingredient_id: string;
 
   @Column()
   quantity: number;
-
-  @Column()
-  unit: string;
 }
