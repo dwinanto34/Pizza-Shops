@@ -18,8 +18,8 @@ import {
     constructor(private readonly ordersService: OrdersService) {}
   
     @Get()
-    getAllOrderss(): Promise<Orders[]> {
-      return this.ordersService.getAllOrderss();
+    getAllOrders(): Promise<Orders[]> {
+      return this.ordersService.getAllOrders();
     }
   
     @Post()

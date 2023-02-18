@@ -14,7 +14,7 @@ export class OrdersService {
     private readonly ordersRepository: OrdersRepository,
   ) {}
 
-  async getAllOrderss(): Promise<Array<Orders>> {
+  async getAllOrders(): Promise<Array<Orders>> {
     return this.ordersRepository.find({});
   }
   
@@ -47,9 +47,8 @@ export class OrdersService {
   ): Promise<Orders> {
     const { id } = getOrdersDto;
     const orders = await this.getOrders({ id });
-    const { pizza_product_id, order_date, sold_price, ingredient_cost, quantity, total_sold_price, total_ingredient_cost } = updateOrdersDto;
-
-    orders.pizza_product_id = pizza_product_id;
+    const { product_id, order_date, sold_price, ingredient_cost, quantity, total_sold_price, total_ingredient_cost } = updateOrdersDto;
+    orders.product_id = product_id
     orders.order_date = order_date;
     orders.sold_price = sold_price;
     orders.ingredient_cost = ingredient_cost;

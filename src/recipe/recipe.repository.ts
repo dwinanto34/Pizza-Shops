@@ -8,19 +8,12 @@ import {
   
   @EntityRepository(Recipe)
   export class RecipeRepository extends Repository<Recipe> {
-    async createRecipe(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
-      const { pizza_product_id, pizza_ingredient_id, quantity } = createRecipeDto;
-      const recipe = this.create({
-        pizza_product_id,
-        pizza_ingredient_id,
-        quantity,
-      });
-  
+    async createRecipe(recipe: Recipe): Promise<Recipe> {
       try {
         await this.save(recipe);
       } catch (err) {
         if (err.code === '23505') {
-          throw new ConflictException('Short name already exists');
+          throw new ConflictException('Data already exists');
         } else {
           throw new InternalServerErrorException();
         }

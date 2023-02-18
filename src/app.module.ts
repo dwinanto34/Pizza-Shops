@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { IngredientModule } from './Ingredient/ingredient.module';
 import { ProductModule } from './product/product.module';
+import { OrdersModule } from './orders/orders.module';
+import { RecipeModule } from './recipe/recipe.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { ProductModule } from './product/product.module';
       },
     }),
     ProductModule,
+    IngredientModule,
+    OrdersModule,
+    RecipeModule,
   ],
   controllers: [],
   providers: [],

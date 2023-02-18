@@ -3,33 +3,33 @@ import { IsNotEmpty, IsNumber, IsString, IsPositive } from 'class-validator';
 export class CreateOrdersDto {
     @IsString()
     @IsNotEmpty()
-    pizza_product_id: string;
+    product_id: string;
 
     @IsNotEmpty()
-    order_date: Date
-
-    @IsNumber()
-    @IsPositive()
-    @IsNotEmpty()
-    sold_price: number
+    order_date: Date;
 
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
-    ingredient_cost: number
+    sold_price: number;
 
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
-    quantity: number
+    ingredient_cost: number;
 
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
-    total_sold_price: number
+    quantity: number;
 
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
-    total_ingredient_cost: number
+    total_sold_price: number;
+
+    @IsNumber()
+    @IsPositive()
+    @IsNotEmpty()
+    total_ingredient_cost: number;
 }

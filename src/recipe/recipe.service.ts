@@ -6,12 +6,17 @@ import { GetRecipeDto } from './dto/get-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe } from './recipe.entity';
 import { RecipeRepository } from './recipe.repository';
+import { ProductService } from '../product/product.service';
+import { IngredientService } from '../ingredient/ingredient.service';
 
 @Injectable()
 export class RecipeService {
   constructor(
     @InjectRepository(RecipeRepository)
     private readonly recipeRepository: RecipeRepository,
+    
+    private readonly productService: ProductService,
+    private readonly ingredientService: IngredientService,
   ) {}
 
   async getAllRecipes(): Promise<Array<Recipe>> {
@@ -19,7 +24,13 @@ export class RecipeService {
   }
   
   async createRecipe(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
-    return this.recipeRepository.createRecipe(createRecipeDto);
+    const { product_id, ingredient_id, quantity } = createRecipeDto;
+    const recipeEntity = new Recipe();
+    recipeEntity.ingredient = await this.ingredientService.getIngredient({ id: ingredient_id });
+    recipeEntity.product = await this.productService.getProduct({ id: product_id });
+    recipeEntity.quantity = quantity;
+    
+    return this.recipeRepository.createRecipe(recipeEntity);
   }
 
   async getRecipe(conditions: FindConditions<Recipe>): Promise<Recipe> {
@@ -46,11 +57,11 @@ export class RecipeService {
     updateRecipeDto: UpdateRecipeDto,
   ): Promise<Recipe> {
     const { id } = getRecipeDto;
+    const { product_id, ingredient_id, quantity } = updateRecipeDto;
+    
     const recipe = await this.getRecipe({ id });
-    const { pizza_product_id, pizza_ingredient_id, quantity } = updateRecipeDto;
-
-    recipe.pizza_product_id = pizza_product_id;
-    recipe.pizza_ingredient_id = pizza_ingredient_id;
+    recipe.product = await this.productService.getProduct({ id: product_id });
+    recipe.ingredient = await this.ingredientService.getIngredient({ id: ingredient_id });
     recipe.quantity = quantity;
 
     await this.recipeRepository.save(recipe);

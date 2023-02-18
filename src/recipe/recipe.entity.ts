@@ -1,15 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from '../product/product.entity'
+import { Ingredient } from '../ingredient/ingredient.entity'
 
 @Entity()
 export class Recipe {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  pizza_product_id: string;
+  @OneToOne(() => Product)
+  product: Product;
 
-  @Column()
-  pizza_ingredient_id: string;
+  @OneToOne(() => Ingredient)
+  ingredient: Ingredient;
 
   @Column()
   quantity: number;

@@ -21,7 +21,7 @@ import {
         await this.save(ingredient);
       } catch (err) {
         if (err.code === '23505') {
-          throw new ConflictException('Short name already exists');
+          throw new ConflictException('Data already exists');
         } else {
           throw new InternalServerErrorException();
         }
