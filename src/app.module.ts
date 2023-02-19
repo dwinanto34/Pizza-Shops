@@ -5,6 +5,9 @@ import { IngredientModule } from './Ingredient/ingredient.module';
 import { ProductModule } from './product/product.module';
 import { OrdersModule } from './orders/orders.module';
 import { RecipeModule } from './recipe/recipe.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import {  } from 'apollo-server-express';
+import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -24,6 +27,10 @@ import { RecipeModule } from './recipe/recipe.module';
         };
       },
     }),
+    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    //   autoSchemaFile: true
+    // }),
     ProductModule,
     IngredientModule,
     OrdersModule,

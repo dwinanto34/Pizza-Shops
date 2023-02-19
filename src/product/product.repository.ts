@@ -4,11 +4,11 @@ import {
   } from '@nestjs/common';
   import { EntityRepository, Repository } from 'typeorm';
   import { CreateProductDto } from './dto/create-product.dto';
-  import { Product } from './product.entity'
+  import { Products } from './product.entity'
   
-  @EntityRepository(Product)
-  export class ProductRepository extends Repository<Product> {
-    async createProduct(createProductDto: CreateProductDto): Promise<Product> {
+  @EntityRepository(Products)
+  export class ProductRepository extends Repository<Products> {
+    async createProduct(createProductDto: CreateProductDto): Promise<Products> {
       const { name, price } = createProductDto;
       const product = this.create({
         name,

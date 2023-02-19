@@ -9,9 +9,9 @@ import { ProductRepository } from '../product/product.repository';
 import { IngredientRepository } from '../ingredient/ingredient.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([RecipeRepository])],
+  imports: [TypeOrmModule.forFeature([RecipeRepository, ProductRepository, IngredientRepository])],
   controllers: [RecipeController],
-  providers: [RecipeService, ProductService, IngredientService, ProductRepository, IngredientRepository],
+  providers: [RecipeService, ProductService, IngredientService],
   exports: [RecipeService],
 })
 export class RecipeModule {}

@@ -26,9 +26,14 @@ import {
     createIngredient(@Body() createIngredientDto: CreateIngredientDto): Promise<Ingredient> {
       return this.ingredientService.createIngredient(createIngredientDto);
     }
-  
+    
+    @Get(':name')
+    getIngredient(@Param('name') name: string): Promise<Ingredient> {
+      return this.ingredientService.getIngredient({ name });
+    }
+
     @Delete('/:id')
-    deleteIngredient(@Param() getIngredientDto: GetIngredientDto): Promise<void> {
+    deleteIngredient(@Param() getIngredientDto: GetIngredientDto): Promise<boolean> {
       return this.ingredientService.deleteIngredient(getIngredientDto);
     }
   

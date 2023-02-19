@@ -16,7 +16,8 @@ import {
         quantity,
         unit,
       });
-  
+
+      
       try {
         await this.save(ingredient);
       } catch (err) {

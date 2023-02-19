@@ -3,11 +3,11 @@ import { IsNotEmpty, IsNumber, IsString, IsPositive } from 'class-validator';
 export class CreateRecipeDto {
     @IsString()
     @IsNotEmpty()
-    product_id: string;
+    product_name: string;
     
     @IsString()
     @IsNotEmpty()
-    ingredient_id: string;
+    ingredient_name: string;
 
     @IsNumber()
     @IsPositive()

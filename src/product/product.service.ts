@@ -2,9 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindConditions } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
-import { GetProductDto } from './dto/get-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from './product.entity';
+import { Products } from './product.entity';
 import { ProductRepository } from './product.repository';
 
 @Injectable()
@@ -14,15 +13,15 @@ export class ProductService {
     private readonly productRepository: ProductRepository,
   ) {}
 
-  async getAllProducts(): Promise<Array<Product>> {
+  async getAllProducts(): Promise<Array<Products>> {
     return this.productRepository.find({});
   }
   
-  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
+  async createProduct(createProductDto: CreateProductDto): Promise<Products> {
     return this.productRepository.createProduct(createProductDto);
   }
 
-  async getProduct(conditions: FindConditions<Product>): Promise<Product> {
+  async getProduct(conditions: FindConditions<Products>): Promise<Products> {
     const product = await this.productRepository.findOne(conditions);
 
     if (!product) {
@@ -32,20 +31,20 @@ export class ProductService {
     return product;
   }
 
-  async deleteProduct(getProductDto: GetProductDto): Promise<void> {
-    const { id } = getProductDto;
+  async deleteProduct(id: string): Promise<boolean> {
     const res = await this.productRepository.delete({ id });
 
     if (res.affected === 0) {
       throw new NotFoundException(`Product with ID: "${id}" not found`);
     }
+
+    return true
   }
 
   async updateProduct(
-    getProductDto: GetProductDto,
+    id: string,
     updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
-    const { id } = getProductDto;
+  ): Promise<Products> {
     const product = await this.getProduct({ id });
     const { name, price } = updateProductDto;
 

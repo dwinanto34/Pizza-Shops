@@ -32,13 +32,15 @@ export class IngredientService {
     return ingredient;
   }
 
-  async deleteIngredient(getIngredientDto: GetIngredientDto): Promise<void> {
+  async deleteIngredient(getIngredientDto: GetIngredientDto): Promise<boolean> {
     const { id } = getIngredientDto;
     const res = await this.ingredientRepository.delete({ id });
 
     if (res.affected === 0) {
       throw new NotFoundException(`Ingredient with ID: "${id}" not found`);
     }
+
+    return true
   }
 
   async updateIngredient(

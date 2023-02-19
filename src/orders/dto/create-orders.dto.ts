@@ -1,35 +1,19 @@
 import { IsNotEmpty, IsNumber, IsString, IsPositive } from 'class-validator';
+import bigDecimal = require('js-big-decimal');
 
 export class CreateOrdersDto {
     @IsString()
     @IsNotEmpty()
-    product_id: string;
+    product_name: string;
 
     @IsNotEmpty()
     order_date: Date;
 
-    @IsNumber()
-    @IsPositive()
     @IsNotEmpty()
-    sold_price: number;
-
-    @IsNumber()
-    @IsPositive()
-    @IsNotEmpty()
-    ingredient_cost: number;
+    sold_price: bigDecimal;
 
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
     quantity: number;
-
-    @IsNumber()
-    @IsPositive()
-    @IsNotEmpty()
-    total_sold_price: number;
-
-    @IsNumber()
-    @IsPositive()
-    @IsNotEmpty()
-    total_ingredient_cost: number;
 }

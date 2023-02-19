@@ -1,16 +1,16 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Product } from '../product/product.entity'
+import { Column, Entity, OneToOne, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Products } from '../product/product.entity'
 import { Ingredient } from '../ingredient/ingredient.entity'
 
 @Entity()
 export class Recipe {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @OneToOne(() => Product)
-  product: Product;
-
-  @OneToOne(() => Ingredient)
+  
+  @ManyToOne(() => Products, (product) => product.recipe)
+  product: Products;
+  
+  @ManyToOne(() => Ingredient, (ingredient) => ingredient.recipe)
   ingredient: Ingredient;
 
   @Column()

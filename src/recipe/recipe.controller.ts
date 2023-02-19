@@ -11,6 +11,7 @@ import {
   import { GetRecipeDto } from './dto/get-recipe.dto';
   import { UpdateRecipeDto } from './dto/update-recipe.dto';
   import { Recipe } from './recipe.entity';
+  import { Ingredient } from '../ingredient/ingredient.entity';
   import { RecipeService } from './recipe.service';
   
   @Controller('recipe')
@@ -28,7 +29,7 @@ import {
     }
   
     @Delete('/:id')
-    deleteRecipe(@Param() getRecipeDto: GetRecipeDto): Promise<void> {
+    deleteRecipe(@Param() getRecipeDto: GetRecipeDto): Promise<boolean> {
       return this.recipeService.deleteRecipe(getRecipeDto);
     }
   
@@ -39,5 +40,10 @@ import {
     ): Promise<Recipe> {
       return this.recipeService.updateRecipe(getRecipeDto, updateRecipeDto);
     }
-  }
+
+    @Get(':product_name')
+    getIngredients(@Param('product_name') product_name: string): Promise<Ingredient[]> {
+      return this.recipeService.getIngredientsByProductName(product_name);
+    }
+}
   

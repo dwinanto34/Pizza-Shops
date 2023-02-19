@@ -1,35 +1,23 @@
+import { EntityRepository, Repository } from 'typeorm';
+import { Orders } from './orders.entity'
 import {
-    ConflictException,
-    InternalServerErrorException,
-  } from '@nestjs/common';
-  import { EntityRepository, Repository } from 'typeorm';
-  import { CreateOrdersDto } from './dto/create-orders.dto';
-  import { Orders } from './orders.entity'
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
-  @EntityRepository(Orders)
-  export class OrdersRepository extends Repository<Orders> {
-    async createOrders(createOrdersDto: CreateOrdersDto): Promise<Orders> {
-      const { product_id, order_date, sold_price, ingredient_cost, quantity, total_sold_price, total_ingredient_cost } = createOrdersDto;
-      const orders = this.create({
-        product_id,
-        order_date,
-        sold_price,
-        ingredient_cost,
-        quantity,
-        total_sold_price,
-        total_ingredient_cost,
-      });
-  
-      try {
-        await this.save(orders);
-      } catch (err) {
-        if (err.code === '23505') {
-          throw new ConflictException('Data already exists');
-        } else {
-          throw new InternalServerErrorException();
-        }
+@EntityRepository(Orders)
+export class OrdersRepository extends Repository<Orders> {
+  async createOrders(order: Orders): Promise<Orders> {
+    try {
+      await this.save(order);
+    } catch (err) {
+      if (err.code === '23505') {
+        throw new ConflictException('Data already exists');
+      } else {
+        throw new InternalServerErrorException();
       }
-  
-      return orders;
     }
+
+    return order;
   }
+}

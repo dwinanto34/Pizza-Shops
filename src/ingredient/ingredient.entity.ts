@@ -1,4 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { OrderCostDetail } from '../orders/order_cost_detail.entity'
+import { Recipe } from '../recipe/recipe.entity'
+import { BigDecimalTransformer } from '../helper/big-decimal.transformer';
+import bigDecimal = require('js-big-decimal');
 
 @Entity()
 export class Ingredient {
@@ -8,12 +12,15 @@ export class Ingredient {
   @Column()
   name: string;
 
-  @Column()
-  average_price_per_unit: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, transformer: new BigDecimalTransformer() })
+  average_price_per_unit: bigDecimal;
 
   @Column()
   quantity: number;
 
   @Column()
   unit: string;
+
+  @OneToMany(() => Recipe, (recipe) => recipe.ingredient)
+  recipe: Recipe[]
 }

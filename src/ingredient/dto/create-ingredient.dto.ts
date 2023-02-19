@@ -1,14 +1,13 @@
 import { IsNotEmpty, IsNumber, IsString, IsPositive } from 'class-validator';
+import bigDecimal = require('js-big-decimal');
 
 export class CreateIngredientDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsNumber()
-  @IsPositive()
   @IsNotEmpty()
-  average_price_per_unit: number;
+  average_price_per_unit: bigDecimal;
 
   @IsNumber()
   @IsPositive()

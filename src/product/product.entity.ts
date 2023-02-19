@@ -1,13 +1,23 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Orders } from '../orders/orders.entity'
+import { Recipe } from '../recipe/recipe.entity'
+import { BigDecimalTransformer } from '../helper/big-decimal.transformer';
+import bigDecimal = require('js-big-decimal');
 
 @Entity()
-export class Product {
+export class Products {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
 
-  @Column()
-  price: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, transformer: new BigDecimalTransformer() })
+  price: bigDecimal;
+
+  @OneToMany(() => Orders, (orders) => orders.product)
+  order: Orders[]
+  
+  @OneToMany(() => Recipe, (recipe) => recipe.product)
+  recipe: Recipe[]
 }

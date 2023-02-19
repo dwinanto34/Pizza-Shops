@@ -1,12 +1,11 @@
 import { IsNotEmpty, IsString, IsPositive, IsNumber } from 'class-validator';
+import bigDecimal = require('js-big-decimal');
 
 export class UpdateProductDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsNumber()
-  @IsPositive()
   @IsNotEmpty()
-  price: number;
+  price: bigDecimal;
 }
