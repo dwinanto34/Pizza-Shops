@@ -2,13 +2,19 @@ import { PizzaOrder } from "./model/order.dto";
 import { Orders } from '../../orders/orders.entity';
 import { OrderCostDetail } from '../../orders/order_cost_detail.entity';
 const { Client } = require('@elastic/elasticsearch');
+import { BigDecimalTransformer } from '../../helper/big-decimal.transformer';
 const esClient = new Client({
   node: 'https://localhost:9200',
   auth: {
     username: 'elastic',
-    password: 'c7gSGHqV_Rnw+zt1bfIK'
+    password: 'gQO6zKXAle72M3NmJq=O'
   },
-  ssl: { rejectUnauthorized: false }
+  ssl: {
+    rejectUnauthorized: false
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 const indexName = 'orders';
 
@@ -27,7 +33,7 @@ export class OrderProcessor {
   async createIndexWithMapping() {
     try {
       const indexExists = await esClient.indices.exists({ index: indexName });
-      if (!indexExists.body) {
+      if (!indexExists) {
         await esClient.indices.create({
           index: indexName,
           body: {
@@ -61,20 +67,22 @@ export class OrderProcessor {
   }
 
   async constructData(orders: Orders, orderCostDetail: OrderCostDetail[]): Promise<PizzaOrder> {
+      const bigDecimalTransformer = new BigDecimalTransformer();
+
       let pizzaOrder = new PizzaOrder;
       pizzaOrder.orderId = orders.id
       pizzaOrder.productName = orders.product.name
       pizzaOrder.orderDate = orders.order_date
       pizzaOrder.quantity = orders.quantity
-      pizzaOrder.soldPrice = orders.sold_price
-      pizzaOrder.totalSoldPrice = orders.total_sold_price
-      pizzaOrder.ingredientCost = orders.ingredient_cost
-      pizzaOrder.totalIngredientCost = orders.total_ingredient_cost
-      pizzaOrder.totalProfit = orders.total_profit
+      pizzaOrder.soldPrice = parseFloat(String(bigDecimalTransformer.to(orders.sold_price)))
+      pizzaOrder.totalSoldPrice = parseFloat(String(bigDecimalTransformer.to(orders.total_sold_price)))
+      pizzaOrder.ingredientCost = parseFloat(String(bigDecimalTransformer.to(orders.ingredient_cost)))
+      pizzaOrder.totalIngredientCost = parseFloat(String(bigDecimalTransformer.to(orders.total_ingredient_cost)))
+      pizzaOrder.totalProfit = parseFloat(String(bigDecimalTransformer.to(orders.total_profit)))
       
       pizzaOrder.ingredients = orderCostDetail.map(detail => ({
           name: detail.ingredient_name,
-          price: detail.cost_price,
+          price: parseFloat(String(bigDecimalTransformer.to(detail.cost_price))),
           quantity: detail.indegredient_used
       }));
 

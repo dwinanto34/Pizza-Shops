@@ -5,16 +5,16 @@ export class PizzaOrder {
     productName: string;
     orderDate: Date;
     quantity: number;
-    soldPrice: bigDecimal;
-    totalSoldPrice: bigDecimal;
-    ingredientCost: bigDecimal;
-    totalIngredientCost: bigDecimal;
-    totalProfit: bigDecimal;
+    soldPrice: number;
+    totalSoldPrice: number;
+    ingredientCost: number;
+    totalIngredientCost: number;
+    totalProfit: number;
     ingredients: Ingredient[];
 }
 
 interface Ingredient {
     name: string;
-    price: bigDecimal;
+    price: number;
     quantity: number;
 }
