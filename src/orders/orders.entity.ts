@@ -30,6 +30,9 @@ export class Orders {
     @Column({ type: 'decimal', precision: 10, scale: 2, transformer: new BigDecimalTransformer() })
     total_ingredient_cost: bigDecimal;
 
+    @Column({ type: 'decimal', precision: 10, scale: 2, transformer: new BigDecimalTransformer() })
+    total_profit: bigDecimal;
+
     @OneToMany(() => OrderCostDetail, (orderCostDetail) => orderCostDetail.order)
     orderCostDetails: OrderCostDetail[]
 }

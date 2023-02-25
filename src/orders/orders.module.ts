@@ -10,11 +10,12 @@ import { OrdersService } from './orders.service';
 import { ProductService } from '../product/product.service';
 import { RecipeService } from '../recipe/recipe.service';
 import { IngredientService } from '../ingredient/ingredient.service';
+import { OrderProcessor } from '../elasticsearch/orders/order.procesor'
 
 @Module({
   imports: [TypeOrmModule.forFeature([OrdersRepository, OrderCostDetailRepository, ProductRepository, IngredientRepository, RecipeRepository])],
   controllers: [OrdersController],
-  providers: [OrdersService, ProductService, RecipeService, IngredientService],
+  providers: [OrdersService, ProductService, RecipeService, IngredientService, OrderProcessor],
   exports: [OrdersService],
 })
 export class OrdersModule {}

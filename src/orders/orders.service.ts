@@ -10,6 +10,7 @@ import { ProductService } from '../product/product.service';
 import { RecipeService } from '../recipe/recipe.service';
 import { Products } from '../product/product.entity';
 import { Orders } from './orders.entity';
+import { OrderProcessor } from '../elasticsearch/orders/order.procesor';
 import bigDecimal = require('js-big-decimal');
 
 @Injectable()
@@ -20,6 +21,7 @@ export class OrdersService {
     private readonly orderCostDetailRepository: OrderCostDetailRepository,
     private readonly productService: ProductService,
     private readonly recipeService: RecipeService,
+    private readonly orderProcessor: OrderProcessor,
   ) {}
 
   async getAllOrders(): Promise<Array<Orders>> {
@@ -64,9 +66,18 @@ export class OrdersService {
 
     let total_ingredient_cost: bigDecimal = ingredient_cost.multiply(new bigDecimal(createOrdersDto.quantity.toString()));
     order.total_ingredient_cost = total_ingredient_cost;
+    order.total_profit = order.total_sold_price.subtract(order.total_ingredient_cost)
 
     // save order and order cost details
-    return this.saveData(order, orderCostDetails);
+    let orders = this.saveData(order, orderCostDetails);
+    if (orders != null) {
+      const success = await this.orderProcessor.processOrder(order, orderCostDetails)
+      if (!success) {
+        console.error(`Error storing data into ES`);
+      }
+    }
+
+    return orders;
   }
 
   async saveData(order: Orders, orderCostDetails: OrderCostDetail[]): Promise<Orders> {

@@ -27,6 +27,7 @@
     "docker-compose:prod:build-only": "docker-compose -f docker-compose.yml -f production.yml build"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.6.0",
     "@nestjs/apollo": "^10.2.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
