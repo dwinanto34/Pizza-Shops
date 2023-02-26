@@ -11,11 +11,12 @@ import { ProductService } from '../product/product.service';
 import { RecipeService } from '../recipe/recipe.service';
 import { IngredientService } from '../ingredient/ingredient.service';
 import { OrderProcessor } from '../elasticsearch/orders/order.procesor'
+import { OrdersResolver } from './graphql/orders.resolver'
 
 @Module({
   imports: [TypeOrmModule.forFeature([OrdersRepository, OrderCostDetailRepository, ProductRepository, IngredientRepository, RecipeRepository])],
   controllers: [OrdersController],
-  providers: [OrdersService, ProductService, RecipeService, IngredientService, OrderProcessor],
+  providers: [OrdersService, ProductService, RecipeService, IngredientService, OrderProcessor, OrdersResolver],
   exports: [OrdersService],
 })
 export class OrdersModule {}

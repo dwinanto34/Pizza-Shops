@@ -6,7 +6,6 @@ import { ProductModule } from './product/product.module';
 import { OrdersModule } from './orders/orders.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import {  } from 'apollo-server-express';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 
 @Module({
@@ -27,10 +26,29 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
         };
       },
     }),
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   autoSchemaFile: true
-    // }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      typeDefs: `
+        type Ingredient {
+          name: String!
+          cost: Float!
+          quantity: Int!
+        }
+        
+        type Orders {
+          productName: String!
+          totalUnitSold: Int!
+          totalCost: Float!
+          totalSales: Float!
+          totalProfit: Float!
+          ingredients: [Ingredient!]!
+        }
+
+        type Query {
+          orders(productName: String, from: String, to: String): [Orders!]!
+        }
+      `,
+    }),
     ProductModule,
     IngredientModule,
     OrdersModule,

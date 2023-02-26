@@ -3,6 +3,7 @@ import { Orders } from '../../orders/orders.entity';
 import { OrderCostDetail } from '../../orders/order_cost_detail.entity';
 const { Client } = require('@elastic/elasticsearch');
 import { BigDecimalTransformer } from '../../helper/big-decimal.transformer';
+import bigDecimal from "js-big-decimal";
 const esClient = new Client({
   node: 'https://localhost:9200',
   auth: {
@@ -67,26 +68,32 @@ export class OrderProcessor {
   }
 
   async constructData(orders: Orders, orderCostDetail: OrderCostDetail[]): Promise<PizzaOrder> {
-      const bigDecimalTransformer = new BigDecimalTransformer();
 
       let pizzaOrder = new PizzaOrder;
       pizzaOrder.orderId = orders.id
       pizzaOrder.productName = orders.product.name
       pizzaOrder.orderDate = orders.order_date
       pizzaOrder.quantity = orders.quantity
-      pizzaOrder.soldPrice = parseFloat(String(bigDecimalTransformer.to(orders.sold_price)))
-      pizzaOrder.totalSoldPrice = parseFloat(String(bigDecimalTransformer.to(orders.total_sold_price)))
-      pizzaOrder.ingredientCost = parseFloat(String(bigDecimalTransformer.to(orders.ingredient_cost)))
-      pizzaOrder.totalIngredientCost = parseFloat(String(bigDecimalTransformer.to(orders.total_ingredient_cost)))
-      pizzaOrder.totalProfit = parseFloat(String(bigDecimalTransformer.to(orders.total_profit)))
-      
+      pizzaOrder.soldPrice = this.parse(orders.sold_price)
+      pizzaOrder.totalSoldPrice = this.parse(orders.total_sold_price)
+      pizzaOrder.ingredientCost = this.parse(orders.ingredient_cost)
+      pizzaOrder.totalIngredientCost = this.parse(orders.total_ingredient_cost)
+      pizzaOrder.totalProfit = this.parse(orders.total_profit)
+  
       pizzaOrder.ingredients = orderCostDetail.map(detail => ({
           name: detail.ingredient_name,
-          price: parseFloat(String(bigDecimalTransformer.to(detail.cost_price))),
+          price: this.parse(detail.cost_price),
           quantity: detail.indegredient_used
       }));
 
       return pizzaOrder;
+  }
+
+  parse(val: bigDecimal): number {
+    const bigDecimalTransformer = new BigDecimalTransformer();
+
+    let floatValue = parseFloat(String(bigDecimalTransformer.to(val)))
+    return parseFloat(floatValue.toFixed(2))
   }
 
   async storeData(data: PizzaOrder): Promise<boolean> {

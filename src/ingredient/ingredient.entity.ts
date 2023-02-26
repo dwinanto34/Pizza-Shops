@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { OrderCostDetail } from '../orders/order_cost_detail.entity'
 import { Recipe } from '../recipe/recipe.entity'
 import { BigDecimalTransformer } from '../helper/big-decimal.transformer';
 import bigDecimal = require('js-big-decimal');
