@@ -1,8 +1,10 @@
+
 CREATE TABLE IF NOT EXISTS products (
     id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
 	name TEXT,
 	price NUMERIC(10,2)
 );
+
 -- DROP TABLE IF EXISTS products;
 
 CREATE TABLE IF NOT EXISTS ingredient (
@@ -12,6 +14,7 @@ CREATE TABLE IF NOT EXISTS ingredient (
 	quantity INTEGER NOT NULL,
 	unit TEXT NOT NULL
 );
+
 -- DROP TABLE IF EXISTS ingredient;
 
 CREATE TABLE IF NOT EXISTS recipe (
@@ -26,6 +29,7 @@ CREATE TABLE IF NOT EXISTS recipe (
 		FOREIGN KEY (ingredient_id)
 		REFERENCES ingredient (id)
 );
+
 -- DROP TABLE IF EXISTS recipe;
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -42,6 +46,7 @@ CREATE TABLE IF NOT EXISTS orders (
 		FOREIGN KEY (productId)
 		REFERENCES products (id)	
 );
+
 -- DROP TABLE IF EXISTS orders;
 
 CREATE TABLE IF NOT EXISTS order_cost_detail (
@@ -58,14 +63,5 @@ CREATE TABLE IF NOT EXISTS order_cost_detail (
 		FOREIGN KEY (ingredient_id)
 		REFERENCES ingredient (id)
 );
+
 -- DROP TABLE IF EXISTS order_cost_detail;
-
-
-
-
-DROP TABLE IF EXISTS order_cost_detail;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS recipe;
-DROP TABLE IF EXISTS ingredient;
-DROP TABLE IF EXISTS products;
-

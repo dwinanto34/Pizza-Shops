@@ -5,7 +5,6 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { GetRecipeDto } from './dto/get-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe } from './recipe.entity';
-import { Ingredient } from '../ingredient/ingredient.entity';
 import { RecipeRepository } from './recipe.repository';
 import { ProductService } from '../product/product.service';
 import { IngredientService } from '../ingredient/ingredient.service';
@@ -48,7 +47,7 @@ export class RecipeService {
     return recipe;
   }
   
-  async getIngredientsByProductName(product_name: string): Promise<Ingredient[]> {
+  async getRecipesByProductName(product_name: string): Promise<Recipe[]> {
     const product = await this.productService.getProduct({ name: product_name })
     const recipes = await this.recipeRepository.find({
       where: {product: product},
@@ -59,12 +58,7 @@ export class RecipeService {
       throw new NotFoundException();
     }
 
-    const ingredients = [];
-    recipes.forEach(recipe => {
-      ingredients.push(recipe.ingredient)
-    })
-
-    return ingredients
+    return recipes
   }
 
   async deleteRecipe(getRecipeDto: GetRecipeDto): Promise<boolean> {

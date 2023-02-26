@@ -36,8 +36,8 @@ export class OrdersService {
       throw new NotFoundException();
     }
     
-    const ingredients = await this.recipeService.getIngredientsByProductName(product.name);
-    if (!ingredients || ingredients.length == 0) {
+    const recipes = await this.recipeService.getRecipesByProductName(product.name);
+    if (!recipes || recipes.length == 0) {
       throw new NotFoundException();
     }
 
@@ -48,16 +48,17 @@ export class OrdersService {
 
     // build order cost details
     const orderCostDetails: OrderCostDetail[] = [];
-    ingredients.forEach(ingredient => {
+    recipes.forEach(recipe => {
+      const ingredient = recipe.ingredient
       const orderCostDetail = new OrderCostDetail();
       orderCostDetail.order = order;
       orderCostDetail.ingredient_name = ingredient.name;
-      orderCostDetail.indegredient_used = ingredient.quantity;
+      orderCostDetail.indegredient_used = recipe.quantity;
       orderCostDetail.unit = ingredient.unit;
-      orderCostDetail.cost_price = ingredient.average_price_per_unit;
+      orderCostDetail.cost_price = ingredient.average_price_per_unit.multiply(new bigDecimal(recipe.quantity.toString()));
       orderCostDetails.push(orderCostDetail);
 
-      ingredient_cost = ingredient_cost.add(ingredient.average_price_per_unit);
+      ingredient_cost = ingredient_cost.add(orderCostDetail.cost_price);
     });
 
     // filling orders information related to ingredient

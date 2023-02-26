@@ -7,9 +7,14 @@
 - **PostgreSQL** - Open-Source Relational Database
 - **Elastic Search** - Search Engine
 
+
+## IMPORTANT! Application Document IMPORTANT!
+
+- Please refer to folder "documentation" to see all the details. For the ERD, and some screenshots.
+
 ## Table creation and master data insertion
 
-- **/db_script/** - Please find the script inside the folder
+- **/db_script/** - Table will be created automatically during the startup of the application. Please find the script inside the folder
 
 ## Postman's collections
 
