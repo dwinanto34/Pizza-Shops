@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "6b351bfa-a2d3-4b6a-b56b-c4ca1c2bd0dc",
+		"name": "Elastic Search",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PUT Order index",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mappings\": {\r\n    \"properties\": {\r\n      \"orderId\": {\r\n        \"type\": \"keyword\"\r\n      },\r\n      \"productName\": {\r\n        \"type\": \"keyword\"\r\n      },\r\n      \"orderDate\": {\r\n        \"type\": \"date\"\r\n      },\r\n      \"quantity\": {\r\n        \"type\": \"long\"\r\n      },\r\n      \"soldPrice\": {\r\n        \"type\": \"scaled_float\",\r\n        \"scaling_factor\": 100,\r\n        \"coerce\": false\r\n      },\r\n      \"totalSoldPrice\": {\r\n        \"type\": \"scaled_float\",\r\n        \"scaling_factor\": 100,\r\n        \"coerce\": false\r\n      },\r\n      \"ingredientCost\": {\r\n        \"type\": \"scaled_float\",\r\n        \"scaling_factor\": 100,\r\n        \"coerce\": false\r\n      },\r\n      \"totalIngredientCost\": {\r\n        \"type\": \"scaled_float\",\r\n        \"scaling_factor\": 100,\r\n        \"coerce\": false\r\n      },\r\n      \"totalProfit\": {\r\n        \"type\": \"scaled_float\",\r\n        \"scaling_factor\": 100,\r\n        \"coerce\": false\r\n      },\r\n      \"ingredients\": {\r\n        \"type\": \"nested\",\r\n        \"properties\": {\r\n          \"name\": {\r\n            \"type\": \"keyword\"\r\n          },\r\n          \"price\": {\r\n            \"type\": \"scaled_float\",\r\n            \"scaling_factor\": 100,\r\n            \"coerce\": false\r\n          },\r\n          \"quantity\": {\r\n            \"type\": \"long\"\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:9200/orders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT orders",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"orderId\" : \"8b4b8489-ced2-4878-b838-d03db4e67e25\",\r\n  \"productName\" : \"Branco\",\r\n  \"orderDate\" : \"2023-01-01T09:00:00.000Z\",\r\n  \"quantity\" : 3,\r\n  \"soldPrice\" : 250.11,\r\n  \"totalSoldPrice\" : 750.33,\r\n  \"ingredientCost\" : 2.37,\r\n  \"totalIngredientCost\" : 7.11,\r\n  \"totalProfit\": 111.11,\r\n  \"ingredients\" : [\r\n      {\r\n          \"name\" : \"Pepperoni\",\r\n          \"price\" : 0.12,\r\n          \"quantity\" : 1\r\n      },\r\n      {\r\n          \"name\" : \"Cepperoni\",\r\n          \"price\" : 0.07,\r\n          \"quantity\" : 1\r\n      },\r\n      {\r\n          \"name\" : \"Vegetable\",\r\n          \"price\" : 0.30,\r\n          \"quantity\" : 1\r\n      },\r\n      {\r\n          \"name\" : \"Dough\",\r\n          \"price\" : 1.10,\r\n          \"quantity\" : 1\r\n      },\r\n      {\r\n          \"name\" : \"Sauce\",\r\n          \"price\" : 0.78,\r\n          \"quantity\" : 1\r\n      }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:9200/orders/_doc/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders",
+						"_doc",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FETCH All Data",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9200/orders/_search",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SEARCH Data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\" : {\r\n        \"match\" : {\r\n            \"orderId\" : \"8b4b8489-ced2-4878-b838-d03db4e67e25\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:9200/orders/_search",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Data",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9200/orders/_doc/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders",
+						"_doc",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DROP Order Index",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:9200/orders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AGGREGATE Func",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "gQO6zKXAle72M3NmJq=O",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"size\": 0,\r\n  \"query\": {\r\n    \"range\": {\r\n      \"orderDate\": {\r\n        \"gte\": \"2023-01-01T00:00:00\",\r\n        \"lte\": \"2023-12-15T23:59:59\"\r\n      }\r\n    }\r\n  },\r\n  \"aggs\": {\r\n    \"products\": {\r\n      \"terms\": {\r\n        \"field\": \"productName\",\r\n        \"size\": 10\r\n      },\r\n      \"aggs\": {\r\n        \"total_unit_sold\": {\r\n          \"sum\": {\r\n            \"field\": \"quantity\"\r\n          }\r\n        },\r\n        \"total_cost\": {\r\n          \"sum\": {\r\n            \"field\": \"totalIngredientCost\"\r\n          }\r\n        },\r\n        \"total_sales\": {\r\n          \"sum\": {\r\n            \"field\": \"totalSoldPrice\"\r\n          }\r\n        },\r\n        \"total_profit\": {\r\n          \"sum\": {\r\n            \"field\": \"totalProfit\"\r\n          }\r\n        },\r\n        \"ingredients\": {\r\n          \"nested\": {\r\n            \"path\": \"ingredients\"\r\n          },\r\n          \"aggs\": {\r\n            \"sum_by_ingredients\": {\r\n              \"terms\": {\r\n                \"field\": \"ingredients.name\",\r\n                \"size\": 10\r\n              },\r\n              \"aggs\": {\r\n                \"total_cost\": {\r\n                  \"sum\": {\r\n                    \"field\": \"ingredients.price\"\r\n                  }\r\n                },\r\n                \"total_quantity\": {\r\n                  \"sum\": {\r\n                    \"field\": \"ingredients.quantity\"\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:9200/orders/_search",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"orders",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

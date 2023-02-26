@@ -11,6 +11,10 @@
 
 - **/db_script/** - Please find the script inside the folder
 
+## Postman's collections
+
+- **/postman/** - Please find the exported postman's collection inside the folder
+
 ## Installation
 
 ```bash
