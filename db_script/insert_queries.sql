@@ -1,0 +1,31 @@
+
+INSERT INTO products (id, name, price) 
+VALUES 
+('a4d14a04-d4a8-4825-8491-afa9d7bb6e37', 'Pepperoni', 19.00),
+('f687366a-3af8-498d-9d65-0fd13345b8b6', 'Branco', 15.00),
+('dd19fb04-49e8-448a-91e6-85074d83979b', 'All Dressed', 21.00);
+
+INSERT INTO ingredient (id, name, average_price_per_unit, quantity, unit) 
+VALUES 
+('04704c9a-f83c-4e13-a82f-f8f560cf9a45', 'Pepperoni', 0.12, 1, 'Slice'),
+('af52e6ab-e266-4451-9a01-131c4784d9ba', 'Cheese', 0.07, 1, 'Gram'),
+('185b8974-0b9b-481f-ba5c-cebe155e05cb', 'Vedgetable', 0.30, 1, 'Gram'),
+('742957c9-3426-42ed-8f5b-4ff49639e5a0', 'Dough', 1.10, 1, 'Pizza'),
+('a4e7f837-dc85-4aa5-8ebb-57d2b9085854', 'Sauce', 0.78, 1, 'Pizza');
+
+INSERT INTO recipe (id, product_id, ingredient_id, quantity) 
+VALUES 
+(uuid_generate_v4(), 'a4d14a04-d4a8-4825-8491-afa9d7bb6e37', '04704c9a-f83c-4e13-a82f-f8f560cf9a45', 16),
+(uuid_generate_v4(), 'a4d14a04-d4a8-4825-8491-afa9d7bb6e37', 'af52e6ab-e266-4451-9a01-131c4784d9ba', 40),
+(uuid_generate_v4(), 'a4d14a04-d4a8-4825-8491-afa9d7bb6e37', '742957c9-3426-42ed-8f5b-4ff49639e5a0', 1),
+(uuid_generate_v4(), 'a4d14a04-d4a8-4825-8491-afa9d7bb6e37', 'a4e7f837-dc85-4aa5-8ebb-57d2b9085854', 1),
+
+(uuid_generate_v4(), 'f687366a-3af8-498d-9d65-0fd13345b8b6', 'af52e6ab-e266-4451-9a01-131c4784d9ba', 90),
+(uuid_generate_v4(), 'f687366a-3af8-498d-9d65-0fd13345b8b6', '742957c9-3426-42ed-8f5b-4ff49639e5a0', 1),
+(uuid_generate_v4(), 'f687366a-3af8-498d-9d65-0fd13345b8b6', 'a4e7f837-dc85-4aa5-8ebb-57d2b9085854', 1),
+
+(uuid_generate_v4(), 'dd19fb04-49e8-448a-91e6-85074d83979b', '04704c9a-f83c-4e13-a82f-f8f560cf9a45', 8),
+(uuid_generate_v4(), 'dd19fb04-49e8-448a-91e6-85074d83979b', 'af52e6ab-e266-4451-9a01-131c4784d9ba', 30),
+(uuid_generate_v4(), 'dd19fb04-49e8-448a-91e6-85074d83979b', '185b8974-0b9b-481f-ba5c-cebe155e05cb', 30),
+(uuid_generate_v4(), 'dd19fb04-49e8-448a-91e6-85074d83979b', '742957c9-3426-42ed-8f5b-4ff49639e5a0', 1),
+(uuid_generate_v4(), 'dd19fb04-49e8-448a-91e6-85074d83979b', 'a4e7f837-dc85-4aa5-8ebb-57d2b9085854', 1);
