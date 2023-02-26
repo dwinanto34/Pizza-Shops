@@ -6,6 +6,8 @@
 - **TypeORM** - Database ORM
 - **PostgreSQL** - Open-Source Relational Database
 - **Elastic Search** - Search Engine
+- **REST API**
+- **GraphQL**
 
 
 ## IMPORTANT! Application Document IMPORTANT!
